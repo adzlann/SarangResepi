@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User } from '@supabase/supabase-js';
+import { User, AuthChangeEvent } from '@supabase/supabase-js';
 import { supabase } from '@/utils/supabaseClient';
 import { useRouter } from 'next/navigation';
 
@@ -28,35 +28,51 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     // Listen for changes on auth state (signed in, signed out, etc.)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event: AuthChangeEvent, session) => {
+      console.log('Auth state changed - Event:', event);
+      console.log('Auth state changed - Session:', session?.user?.email);
+      console.log('Auth state changed - Event type:', typeof event);
+      
       setUser(session?.user ?? null);
+      
+      // Only redirect on sign in
+      if (event === 'SIGNED_IN') {
+        console.log('Redirecting to dashboard after sign in');
+        router.push('/dashboard');
+      }
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [router]);
 
   const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({
+    const { error, data } = await supabase.auth.signUp({
       email,
       password,
     });
     if (error) throw error;
-    router.push('/dashboard');
+    
+    console.log('Sign up successful:', data);
   };
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error, data } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     if (error) throw error;
-    router.push('/dashboard');
+    
+    console.log('Sign in successful:', data);
   };
 
   const signOut = async () => {
+    console.log('Signing out user:', user?.email);
     const { error } = await supabase.auth.signOut();
-    if (error) throw error;
-    router.push('/login');
+    if (error) {
+      console.error('Error signing out:', error.message);
+      throw error;
+    }
+    console.log('Successfully signed out');
   };
 
   return (
