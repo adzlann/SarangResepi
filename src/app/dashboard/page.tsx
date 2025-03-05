@@ -37,12 +37,6 @@ export default function Dashboard() {
           console.error('Error fetching recipes:', error);
         } else {
           console.log('Recipes data:', data);
-          // Log image URLs to check their format and accessibility
-          data?.forEach(recipe => {
-            if (recipe.image_url) {
-              console.log('Recipe image URL:', recipe.image_url);
-            }
-          });
           setRecipes(data || []);
         }
         setIsLoading(false);
@@ -69,23 +63,23 @@ export default function Dashboard() {
 
   if (loading || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl">Loading...</div>
+      <div className="min-h-screen bg-dark flex items-center justify-center">
+        <div className="text-2xl text-text-secondary">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-dark">
       <Navbar />
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">My Recipes</h2>
+            <h2 className="text-2xl font-bold text-text-primary">My Recipes</h2>
             <Link
               href="/recipes/create"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-dark-sm text-black bg-accent hover:bg-accent-hover transition-colors"
             >
               Create New Recipe
             </Link>
@@ -93,10 +87,10 @@ export default function Dashboard() {
 
           {recipes.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">You haven&apos;t created any recipes yet.</p>
+              <p className="text-text-secondary text-lg">You haven&apos;t created any recipes yet.</p>
               <Link
                 href="/recipes/create"
-                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-emerald-600 bg-emerald-100 hover:bg-emerald-200"
+                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black bg-accent hover:bg-accent-hover transition-colors"
               >
                 Create your first recipe
               </Link>
@@ -106,7 +100,7 @@ export default function Dashboard() {
               {recipes.map((recipe) => (
                 <div
                   key={recipe.id}
-                  className="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-300 group flex flex-col"
+                  className="bg-dark-surface border border-dark-border overflow-hidden shadow-dark-md rounded-lg hover:shadow-dark-lg transition-all duration-300 group flex flex-col"
                 >
                   <Link href={`/recipes/${recipe.id}`} className="cursor-pointer block flex-grow">
                     {recipe.image_url && (
@@ -122,20 +116,20 @@ export default function Dashboard() {
                       </div>
                     )}
                     <div className="p-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">{recipe.title}</h3>
-                      <p className="text-gray-600 line-clamp-2 mb-4">{recipe.description}</p>
+                      <h3 className="text-lg font-semibold text-text-primary mb-2 group-hover:text-accent transition-colors">{recipe.title}</h3>
+                      <p className="text-text-secondary line-clamp-2 mb-4">{recipe.description}</p>
                     </div>
                   </Link>
-                  <div className="flex justify-end space-x-2 px-4 pb-4 mt-auto border-t pt-4">
+                  <div className="flex justify-end space-x-2 px-4 pb-4 mt-auto border-t border-dark-border pt-4">
                     <Link
                       href={`/recipes/${recipe.id}/edit`}
-                      className="inline-flex items-center p-2 text-emerald-600 hover:text-emerald-700"
+                      className="inline-flex items-center p-2 text-accent hover:text-accent-hover transition-colors"
                     >
                       Edit
                     </Link>
                     <button
                       onClick={() => handleDeleteRecipe(recipe.id)}
-                      className="inline-flex items-center p-2 text-red-600 hover:text-red-700"
+                      className="inline-flex items-center p-2 text-status-error hover:text-red-400 transition-colors"
                     >
                       Delete
                     </button>

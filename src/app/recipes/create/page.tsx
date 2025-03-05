@@ -77,120 +77,120 @@ export default function CreateRecipe() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-dark">
       <Navbar />
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-dark py-8">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-6">
             <BackButton />
           </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Create New Recipe</h1>
+          <div className="bg-dark-surface rounded-lg shadow-dark-md border border-dark-border p-6">
+            <h1 className="text-3xl font-bold text-text-primary mb-6">Create New Recipe</h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-              <div className="bg-red-50 text-red-500 p-3 rounded-md text-sm">
-                {error}
-              </div>
-            )}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <div className="bg-red-900/20 text-status-error p-3 rounded-md text-sm">
+                  {error}
+                </div>
+              )}
 
-            <div>
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-gray-900 bg-white"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                Description
-              </label>
-              <textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={3}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-gray-900 bg-white"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="ingredients" className="block text-sm font-medium text-gray-700">
-                Ingredients
-              </label>
-              <textarea
-                id="ingredients"
-                value={ingredients}
-                onChange={(e) => setIngredients(e.target.value)}
-                rows={5}
-                required
-                placeholder="Enter each ingredient on a new line"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 font-mono text-gray-900 bg-white"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="instructions" className="block text-sm font-medium text-gray-700">
-                Instructions
-              </label>
-              <textarea
-                id="instructions"
-                value={instructions}
-                onChange={(e) => setInstructions(e.target.value)}
-                rows={8}
-                required
-                placeholder="Enter each step on a new line"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 font-mono text-gray-900 bg-white"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Recipe Image</label>
-              <div className="mt-1 flex items-center space-x-4">
-                <label className="cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                  Upload Image
-                  <input type="file" className="hidden" onChange={handleImageChange} accept="image/*" />
+              <div>
+                <label htmlFor="title" className="block text-sm font-medium text-text-primary">
+                  Title
                 </label>
-                {preview && (
-                  <div className="relative h-20 w-20">
-                    <Image
-                      src={preview}
-                      alt="Preview"
-                      fill
-                      className="object-cover rounded-md"
-                    />
-                  </div>
-                )}
+                <input
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                  className="mt-1 block w-full rounded-md border-dark-border bg-dark-surface2 shadow-dark-sm focus:border-accent focus:ring-accent text-text-primary"
+                />
               </div>
-            </div>
 
-            <div className="flex justify-end space-x-3">
-              <button
-                type="button"
-                onClick={() => router.back()}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={loading}
-                className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-transparent rounded-md shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
-              >
-                {loading ? 'Creating...' : 'Create Recipe'}
-              </button>
-            </div>
-          </form>
+              <div>
+                <label htmlFor="description" className="block text-sm font-medium text-text-primary">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={3}
+                  className="mt-1 block w-full rounded-md border-dark-border bg-dark-surface2 shadow-dark-sm focus:border-accent focus:ring-accent text-text-primary"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="ingredients" className="block text-sm font-medium text-text-primary">
+                  Ingredients
+                </label>
+                <textarea
+                  id="ingredients"
+                  value={ingredients}
+                  onChange={(e) => setIngredients(e.target.value)}
+                  rows={5}
+                  required
+                  placeholder="Enter each ingredient on a new line"
+                  className="mt-1 block w-full rounded-md border-dark-border bg-dark-surface2 shadow-dark-sm focus:border-accent focus:ring-accent font-mono text-text-primary placeholder:text-text-secondary"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="instructions" className="block text-sm font-medium text-text-primary">
+                  Instructions
+                </label>
+                <textarea
+                  id="instructions"
+                  value={instructions}
+                  onChange={(e) => setInstructions(e.target.value)}
+                  rows={8}
+                  required
+                  placeholder="Enter each step on a new line"
+                  className="mt-1 block w-full rounded-md border-dark-border bg-dark-surface2 shadow-dark-sm focus:border-accent focus:ring-accent font-mono text-text-primary placeholder:text-text-secondary"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-text-primary">Recipe Image</label>
+                <div className="mt-1 flex items-center space-x-4">
+                  <label className="cursor-pointer bg-dark-surface2 py-2 px-3 border border-dark-border rounded-md shadow-dark-sm text-sm leading-4 font-medium text-text-primary hover:bg-dark-surface focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">
+                    Upload Image
+                    <input type="file" className="hidden" onChange={handleImageChange} accept="image/*" />
+                  </label>
+                  {preview && (
+                    <div className="relative h-20 w-20">
+                      <Image
+                        src={preview}
+                        alt="Preview"
+                        fill
+                        className="object-cover rounded-md"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={() => router.back()}
+                  className="px-4 py-2 text-sm font-medium text-text-primary bg-dark-surface2 border border-dark-border rounded-md shadow-dark-sm hover:bg-dark-surface focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="px-4 py-2 text-sm font-medium text-black bg-accent hover:bg-accent-hover border border-transparent rounded-md shadow-dark-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent disabled:opacity-50"
+                >
+                  {loading ? 'Creating...' : 'Create Recipe'}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

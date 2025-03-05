@@ -1,16 +1,17 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User, AuthChangeEvent } from '@supabase/supabase-js';
+import { User, AuthChangeEvent, AuthResponse } from '@supabase/supabase-js';
 import { supabase } from '@/utils/supabaseClient';
 import { useRouter } from 'next/navigation';
 
 type AuthContextType = {
   user: User | null;
   loading: boolean;
-  signUp: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<AuthResponse>;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,20 +24,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session check:', {
+        hasSession: !!session,
+        userEmail: session?.user?.email,
+        currentPath: window.location.pathname
+      });
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
     // Listen for changes on auth state (signed in, signed out, etc.)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event: AuthChangeEvent, session) => {
-      console.log('Auth state changed - Event:', event);
-      console.log('Auth state changed - Session:', session?.user?.email);
-      console.log('Auth state changed - Event type:', typeof event);
+      console.log('Auth state change detected:', {
+        event,
+        hasSession: !!session,
+        userEmail: session?.user?.email,
+        currentPath: window.location.pathname,
+        timestamp: new Date().toISOString()
+      });
       
       setUser(session?.user ?? null);
       
-      // Only redirect on sign in
-      if (event === 'SIGNED_IN') {
+      // Only redirect on sign in and not on password reset page
+      if (event === 'SIGNED_IN' && !window.location.pathname.includes('/reset-password')) {
         console.log('Redirecting to dashboard after sign in');
         router.push('/dashboard');
       }
@@ -45,14 +55,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, [router]);
 
-  const signUp = async (email: string, password: string) => {
-    const { error, data } = await supabase.auth.signUp({
+  const signUp = async (email: string, password: string): Promise<AuthResponse> => {
+    const response = await supabase.auth.signUp({
       email,
       password,
     });
-    if (error) throw error;
+    if (response.error) throw response.error;
     
-    console.log('Sign up successful:', data);
+    console.log('Sign up successful:', response.data);
+    return response;
   };
 
   const signIn = async (email: string, password: string) => {
@@ -75,8 +86,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     console.log('Successfully signed out');
   };
 
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    if (error) throw error;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );

@@ -187,7 +187,7 @@ export default function Comments({ recipeId }: Props) {
 
   return (
     <div className="mt-8 max-w-4xl mx-auto">
-      <h3 className="text-xl font-semibold mb-4 text-gray-800">Comments</h3>
+      <h3 className="text-xl font-semibold mb-4 text-text-primary">Comments</h3>
       
       {/* Comment Form */}
       {user && (
@@ -197,17 +197,17 @@ export default function Comments({ recipeId }: Props) {
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Add a comment..."
-              className="w-full p-3 border rounded-md text-gray-800 placeholder-gray-500 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 border border-dark-border rounded-md text-text-primary placeholder-text-secondary bg-dark-surface2 focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
               rows={3}
               disabled={isSubmitting}
             />
             {error && (
-              <p className="text-red-500 text-sm">{error}</p>
+              <p className="text-status-error text-sm">{error}</p>
             )}
             <button
               type="submit"
               disabled={isSubmitting || !newComment.trim()}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 disabled:opacity-50 w-fit"
+              className="bg-accent text-black px-4 py-2 rounded-md hover:bg-accent-hover disabled:opacity-50 w-fit transition-colors"
             >
               {isSubmitting ? 'Posting...' : 'Post Comment'}
             </button>
@@ -218,21 +218,21 @@ export default function Comments({ recipeId }: Props) {
       {/* Comments List */}
       <div className="space-y-4">
         {comments.map((comment) => (
-          <div key={comment.id} className="bg-white border border-gray-200 p-4 rounded-lg shadow-sm">
+          <div key={comment.id} className="bg-dark-surface border border-dark-border p-4 rounded-lg shadow-dark-sm">
             <div className="flex justify-between items-start">
               <div className="space-y-1">
-                <p className="text-sm font-medium text-blue-600">
+                <p className="text-sm font-medium text-accent">
                   {getDisplayName(comment)}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-text-secondary">
                   {formatDistanceToNow(new Date(comment.created_at))} ago
                 </p>
-                <p className="mt-2 text-gray-800">{comment.text}</p>
+                <p className="mt-2 text-text-primary">{comment.text}</p>
               </div>
               {user?.id === comment.user_id && (
                 <button
                   onClick={() => handleDelete(comment.id)}
-                  className="text-red-500 hover:text-red-700 text-sm"
+                  className="text-status-error hover:text-red-400 text-sm transition-colors"
                 >
                   Delete
                 </button>

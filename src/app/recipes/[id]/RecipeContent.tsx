@@ -82,109 +82,109 @@ export default function RecipeContent({ recipe }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-dark">
       {user ? <Navbar /> : <PublicNavbar />}
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
           <BackButton />
         </div>
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-        {recipe.image_url && (
-          <div className="relative w-full h-[300px] sm:h-[400px] overflow-hidden">
-            <Image 
-              src={recipe.image_url} 
-              alt={recipe.title}
-              fill
-              className="w-full h-full object-contain"
-              onError={(e) => {
-                console.error('Image load error:', e);
-                const img = e.target as HTMLImageElement;
-                console.log('Failed URL:', img.src);
-              }}
-            />
-          </div>
-        )}
-        <div className="p-8">
-          <div className="flex justify-between items-start mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                {recipe.title}
-              </h1>
-              <div className="text-sm text-gray-500 mb-4">
-                <span>By {recipe.author_email.split('@')[0]}</span>
-                <span className="mx-2">•</span>
-                <span>{timeAgo}</span>
+        <div className="max-w-4xl mx-auto bg-dark-surface rounded-lg shadow-dark-lg overflow-hidden border border-dark-border">
+          {recipe.image_url && (
+            <div className="relative w-full h-[300px] sm:h-[400px] overflow-hidden bg-dark-surface2">
+              <Image 
+                src={recipe.image_url} 
+                alt={recipe.title}
+                fill
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  console.error('Image load error:', e);
+                  const img = e.target as HTMLImageElement;
+                  console.log('Failed URL:', img.src);
+                }}
+              />
+            </div>
+          )}
+          <div className="p-8">
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <h1 className="text-3xl font-bold text-text-primary mb-2">
+                  {recipe.title}
+                </h1>
+                <div className="text-sm text-text-secondary mb-4">
+                  <span>By {recipe.author_email.split('@')[0]}</span>
+                  <span className="mx-2">•</span>
+                  <span>{timeAgo}</span>
+                </div>
+                {recipe.description && (
+                  <p className="text-text-secondary mb-6">
+                    {recipe.description}
+                  </p>
+                )}
               </div>
-              {recipe.description && (
-                <p className="text-gray-700 mb-6">
-                  {recipe.description}
-                </p>
+              {isOwner && (
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => router.push(`/recipes/${recipe.id}/edit`)}
+                    className="text-sm text-accent hover:text-accent-hover transition-colors"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={handleDelete}
+                    className="text-sm text-status-error hover:text-red-400 transition-colors"
+                  >
+                    Delete
+                  </button>
+                </div>
               )}
             </div>
-            {isOwner && (
-              <div className="flex space-x-4">
-                <button
-                  onClick={() => router.push(`/recipes/${recipe.id}/edit`)}
-                  className="text-sm text-emerald-600 hover:text-emerald-500"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={handleDelete}
-                  className="text-sm text-red-600 hover:text-red-500"
-                >
-                  Delete
-                </button>
+
+            {user ? (
+              <div className="prose prose-dark max-w-none">
+                <section className="mb-8">
+                  <h2 className="text-2xl font-bold text-text-primary mb-4 tracking-wide">
+                    Ingredients
+                  </h2>
+                  <pre className="whitespace-pre-wrap bg-dark-surface2 p-6 rounded-lg text-text-primary text-base font-normal leading-relaxed border border-dark-border">
+                    {recipe.ingredients}
+                  </pre>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl font-bold text-text-primary mb-4 tracking-wide">
+                    Instructions
+                  </h2>
+                  <pre className="whitespace-pre-wrap bg-dark-surface2 p-6 rounded-lg text-text-primary text-base font-normal leading-relaxed border border-dark-border">
+                    {recipe.instructions}
+                  </pre>
+                </section>
+              </div>
+            ) : (
+              <div className="mt-8 bg-dark-surface2 border border-dark-border rounded-lg p-8 text-center">
+                <h3 className="text-xl font-semibold text-text-primary mb-4">Want to see the full recipe?</h3>
+                <p className="text-text-secondary mb-6">Sign in to view the complete ingredients list and step-by-step instructions.</p>
+                <div className="flex justify-center space-x-4">
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-dark-sm text-black bg-accent hover:bg-accent-hover transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="text-accent hover:text-accent-hover transition-colors font-medium"
+                  >
+                    Sign up
+                  </Link>
+                </div>
               </div>
             )}
           </div>
-
-          {user ? (
-            <div className="prose max-w-none">
-              <section className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4 tracking-wide">
-                  Ingredients
-                </h2>
-                <pre className="whitespace-pre-wrap bg-gray-50 p-6 rounded-lg text-gray-800 text-base font-normal leading-relaxed border border-gray-200">
-                  {recipe.ingredients}
-                </pre>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4 tracking-wide">
-                  Instructions
-                </h2>
-                <pre className="whitespace-pre-wrap bg-gray-50 p-6 rounded-lg text-gray-800 text-base font-normal leading-relaxed border border-gray-200">
-                  {recipe.instructions}
-                </pre>
-              </section>
-            </div>
-          ) : (
-            <div className="mt-8 bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Want to see the full recipe?</h3>
-              <p className="text-gray-600 mb-6">Sign in to view the complete ingredients list and step-by-step instructions.</p>
-              <div className="flex justify-center space-x-4">
-                <Link
-                  href="/login"
-                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/register"
-                  className="inline-flex items-center px-6 py-3 border border-emerald-600 text-base font-medium rounded-md text-emerald-600 hover:bg-emerald-50"
-                >
-                  Create Account
-                </Link>
-              </div>
-            </div>
-          )}
         </div>
+        
+        {/* Comments Section */}
+        <Comments recipeId={recipe.id} />
       </div>
-      
-      {/* Comments Section */}
-      <Comments recipeId={recipe.id} />
-    </div>
     </div>
   );
 }
