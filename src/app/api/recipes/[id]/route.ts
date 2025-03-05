@@ -1,20 +1,20 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/utils/supabaseClient';
 import { PostgrestError } from '@supabase/supabase-js';
 
 // Using the standard Web API Request type
 export async function GET(
-  request: Request,
-  context: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: { id: string } }
 ) {
   console.log('[API Debug] GET Request:', {
-    params: context.params,
+    params: params,
     url: request.url,
     timestamp: new Date().toISOString()
   });
 
   try {
-    const { id } = context.params;
+    const { id } = params;
 
     const { data: recipe, error } = await supabase
       .from('recipes')
@@ -45,17 +45,17 @@ export async function GET(
 }
 
 export async function PUT(
-  request: Request,
-  context: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: { id: string } }
 ) {
   console.log('[API Debug] PUT Request:', {
-    params: context.params,
+    params: params,
     url: request.url,
     timestamp: new Date().toISOString()
   });
 
   try {
-    const { id } = context.params;
+    const { id } = params;
     const body = await request.json();
 
     console.log('[API Debug] Update recipe request:', { id, body });
@@ -85,17 +85,17 @@ export async function PUT(
 }
 
 export async function DELETE(
-  request: Request,
-  context: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: { id: string } }
 ) {
   console.log('[API Debug] DELETE Request:', {
-    params: context.params,
+    params: params,
     url: request.url,
     timestamp: new Date().toISOString()
   });
 
   try {
-    const { id } = context.params;
+    const { id } = params;
 
     console.log('[API Debug] Delete recipe request:', id);
 
