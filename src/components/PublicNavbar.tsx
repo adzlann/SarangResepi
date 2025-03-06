@@ -1,28 +1,27 @@
 'use client';
 
 import Link from 'next/link';
-import { useTheme } from './ThemeProvider';
+import { useState } from 'react';
+import { Bars3Icon } from '@heroicons/react/24/outline';
 import Logo from './Logo';
+import MobileSidebar from './MobileSidebar';
 
 export default function PublicNavbar() {
-  const { toggleTheme } = useTheme();
-  
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <nav className="bg-dark-surface border-b border-dark-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-14 sm:h-20">
           <div className="flex items-center">
-            <Logo href="/" size="md" />
+            <div className="h-14 sm:h-20 flex items-center">
+              <Logo href="/" size="sm" className="sm:hidden" />
+              <Logo href="/" size="md" className="hidden sm:block" />
+            </div>
           </div>
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={toggleTheme}
-              className="p-2 text-text-secondary hover:text-accent transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-              </svg>
-            </button>
+
+          {/* Desktop Navigation */}
+          <div className="hidden sm:flex items-center space-x-4">
             <Link
               href="/login"
               className="text-sm font-medium text-accent hover:text-accent-hover transition-colors"
@@ -36,8 +35,29 @@ export default function PublicNavbar() {
               Get Started
             </Link>
           </div>
+
+          {/* Mobile Menu Button */}
+          <div className="flex sm:hidden items-center">
+            <button
+              type="button"
+              className="text-text-secondary hover:text-text-primary p-2 -mr-2"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <span className="sr-only">Open menu</span>
+              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Mobile Sidebar */}
+      <MobileSidebar
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        userEmail={null}
+        onSignOut={() => {}}
+        isSigningOut={false}
+      />
     </nav>
   );
 }

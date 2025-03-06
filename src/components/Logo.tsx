@@ -18,38 +18,40 @@ export default function Logo({ className = '', size = 'md', href, imageOnly = fa
   // Define size variants for both the text and image
   const sizeClasses = {
     sm: {
-      text: 'text-2xl',
-      image: { width: 100, height: 100 }
+      text: 'text-xl',
+      image: { width: 60, height: 60 }
     },
     md: {
-      text: 'text-3xl',
-      image: { width: 120, height: 120 }
+      text: 'text-2xl sm:text-3xl',
+      image: { width: 80, height: 80 }
     },
     lg: {
-      text: 'text-4xl',
-      image: { width: 140, height: 140 }
+      text: 'text-3xl sm:text-4xl',
+      image: { width: 100, height: 100 }
     }
   };
 
   // Create the logo content
   const logoContent = (
-    <div className={`flex items-center ${imageOnly ? 'justify-center' : ''} ${className}`}>
-      {/* Text logo with reduced spacing */}
-      {!imageOnly && (
-        <span className={`font-bold text-accent ${sizeClasses[size].text} tracking-tighter`}>
-          SarangResepi
-        </span>
-      )}
-      {/* Image logo */}
-      <div className={`relative ${!imageOnly ? '-ml-8' : ''}`}>
-        <Image
-          src="/images/nasilemak.png"
-          alt="SarangResepi Logo"
-          width={sizeClasses[size].image.width}
-          height={sizeClasses[size].image.height}
-          className="object-contain"
-          priority
-        />
+    <div className={`flex items-center h-full ${imageOnly ? 'justify-center' : ''} ${className}`}>
+      <div className="flex items-center">
+        {/* Text logo */}
+        {!imageOnly && (
+          <span className={`font-bold text-accent ${sizeClasses[size].text} tracking-tighter leading-none`}>
+            SarangResepi
+          </span>
+        )}
+        {/* Image logo */}
+        <div className={`relative flex items-center ${!imageOnly ? '-ml-2 sm:-ml-3' : ''}`}>
+          <Image
+            src="/images/nasilemak.png"
+            alt="SarangResepi Logo"
+            width={sizeClasses[size].image.width}
+            height={sizeClasses[size].image.height}
+            className="object-contain"
+            priority
+          />
+        </div>
       </div>
     </div>
   );
