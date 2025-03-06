@@ -96,120 +96,120 @@ export default function EditRecipeForm({ recipe }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black">
       <Navbar />
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-black py-8">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-6">
             <BackButton />
           </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Edit Recipe</h1>
+          <div className="bg-[#111111] rounded-lg shadow p-6">
+            <h1 className="text-3xl font-bold text-white mb-6">Edit Recipe</h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-              <div className="bg-red-50 text-red-500 p-3 rounded-md text-sm">
-                {error}
-              </div>
-            )}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <div className="bg-red-900/50 text-red-400 p-3 rounded-md text-sm">
+                  {error}
+                </div>
+              )}
 
-            <div>
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-gray-900 bg-white"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                Description
-              </label>
-              <textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={3}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-gray-900 bg-white"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="ingredients" className="block text-sm font-medium text-gray-700">
-                Ingredients
-              </label>
-              <textarea
-                id="ingredients"
-                value={ingredients}
-                onChange={(e) => setIngredients(e.target.value)}
-                rows={5}
-                required
-                placeholder="Enter each ingredient on a new line"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 font-mono text-gray-900 bg-white"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="instructions" className="block text-sm font-medium text-gray-700">
-                Instructions
-              </label>
-              <textarea
-                id="instructions"
-                value={instructions}
-                onChange={(e) => setInstructions(e.target.value)}
-                rows={8}
-                required
-                placeholder="Enter each step on a new line"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 font-mono text-gray-900 bg-white"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Recipe Image</label>
-              <div className="mt-1 flex items-center space-x-4">
-                <label className="cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                  Change Image
-                  <input type="file" className="hidden" onChange={handleImageChange} accept="image/*" />
+              <div>
+                <label htmlFor="title" className="block text-sm font-medium text-gray-200">
+                  Title
                 </label>
-                {preview && (
-                  <div className="relative h-20 w-20">
-                    <Image
-                      src={preview}
-                      alt="Preview"
-                      fill
-                      className="object-cover rounded-md"
-                    />
-                  </div>
-                )}
+                <input
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                  className="mt-1 block w-full rounded-md border-gray-800 bg-[#1a1a1a] text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                />
               </div>
-            </div>
 
-            <div className="flex justify-end space-x-3">
-              <button
-                type="button"
-                onClick={() => router.push(`/recipes/${recipe.id}`)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={loading}
-                className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-transparent rounded-md shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
-              >
-                {loading ? 'Saving...' : 'Save Changes'}
-              </button>
-            </div>
-          </form>
+              <div>
+                <label htmlFor="description" className="block text-sm font-medium text-gray-200">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={3}
+                  className="mt-1 block w-full rounded-md border-gray-800 bg-[#1a1a1a] text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="ingredients" className="block text-sm font-medium text-gray-200">
+                  Ingredients
+                </label>
+                <textarea
+                  id="ingredients"
+                  value={ingredients}
+                  onChange={(e) => setIngredients(e.target.value)}
+                  rows={5}
+                  required
+                  placeholder="Enter each ingredient on a new line"
+                  className="mt-1 block w-full rounded-md border-gray-800 bg-[#1a1a1a] text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500 font-mono"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="instructions" className="block text-sm font-medium text-gray-200">
+                  Instructions
+                </label>
+                <textarea
+                  id="instructions"
+                  value={instructions}
+                  onChange={(e) => setInstructions(e.target.value)}
+                  rows={8}
+                  required
+                  placeholder="Enter each step on a new line"
+                  className="mt-1 block w-full rounded-md border-gray-800 bg-[#1a1a1a] text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500 font-mono"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-200">Recipe Image</label>
+                <div className="mt-1 flex items-center space-x-4">
+                  <label className="cursor-pointer bg-[#1a1a1a] py-2 px-3 border border-gray-800 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-200 hover:bg-[#222222] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                    Change Image
+                    <input type="file" className="hidden" onChange={handleImageChange} accept="image/*" />
+                  </label>
+                  {preview && (
+                    <div className="relative h-20 w-20">
+                      <Image
+                        src={preview}
+                        alt="Preview"
+                        fill
+                        className="object-cover rounded-md"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={() => router.push(`/recipes/${recipe.id}`)}
+                  className="px-4 py-2 text-sm font-medium text-gray-200 bg-[#1a1a1a] border border-gray-800 rounded-md shadow-sm hover:bg-[#222222] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="px-4 py-2 text-sm font-medium text-gray-900 bg-yellow-500 border border-transparent rounded-md shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 disabled:opacity-50"
+                >
+                  {loading ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
