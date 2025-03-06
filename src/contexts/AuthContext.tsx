@@ -19,15 +19,16 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    setMounted(true);
     // Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
       console.log('Initial session check:', {
         hasSession: !!session,
         userEmail: session?.user?.email,
-        currentPath: window.location.pathname
       });
       setUser(session?.user ?? null);
       setLoading(false);
@@ -39,14 +40,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         event,
         hasSession: !!session,
         userEmail: session?.user?.email,
-        currentPath: window.location.pathname,
         timestamp: new Date().toISOString()
       });
       
       setUser(session?.user ?? null);
       
       // Only redirect on sign in and not on password reset page
-      if (event === 'SIGNED_IN' && !window.location.pathname.includes('/reset-password')) {
+      if (event === 'SIGNED_IN' && typeof window !== 'undefined' && !window.location.pathname.includes('/reset-password')) {
         console.log('Redirecting to dashboard after sign in');
         router.push('/dashboard');
       }
@@ -87,11 +87,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const resetPassword = async (email: string) => {
+    if (typeof window === 'undefined') {
+      throw new Error('resetPassword must be called in a browser environment');
+    }
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
     if (error) throw error;
   };
+
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut, resetPassword }}>

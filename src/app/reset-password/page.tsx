@@ -47,7 +47,7 @@ export default function ResetPassword() {
     console.log('URL Parameters:', {
       errorCode,
       errorDescription,
-      fullURL: window.location.href
+      fullURL: typeof window !== 'undefined' ? window.location.href : ''
     });
     
     if (errorCode === 'otp_expired') {

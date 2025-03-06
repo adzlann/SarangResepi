@@ -25,19 +25,30 @@ export default function ThemeProvider({
   children: React.ReactNode;
 }) {
   const [theme, setTheme] = useState<Theme>('dark');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     // Always start with dark mode
-    document.documentElement.classList.add('dark');
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.add('dark');
+    }
   }, []);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => {
       const newTheme = prevTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.classList.toggle('dark');
+      if (typeof document !== 'undefined') {
+        document.documentElement.classList.toggle('dark');
+      }
       return newTheme;
     });
   };
+
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
