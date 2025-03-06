@@ -1,0 +1,11 @@
+{
+  "version": "0.1.0",
+  "name": "sarangresepi",
+  "dependencies": {
+    "next": {
+      "version": "15.1.7",
+      "resolved": "https://registry.npmjs.org/next/-/next-15.1.7.tgz",
+      "overridden": false
+    }
+  }
+}

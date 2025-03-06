@@ -4,13 +4,13 @@ import RecipeContent from './RecipeContent';
 import { type ReactNode } from 'react';
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function RecipePage({ params }: Props): Promise<ReactNode> {
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const recipe = await getRecipe(id);

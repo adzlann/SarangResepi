@@ -3,13 +3,13 @@ import { notFound } from 'next/navigation';
 import EditRecipeForm from './EditRecipeForm';
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function EditRecipePage({ params }: Props) {
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const recipe = await getRecipe(id);
