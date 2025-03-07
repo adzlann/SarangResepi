@@ -81,7 +81,7 @@ SarangResepi ("Recipe Nest" in Malay) is a full-stack web application designed t
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/sarangresepi.git
+git clone https://github.com/SarangResepi/sarangresepi.git
 cd sarangresepi
 ```
 
